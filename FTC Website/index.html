@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#f2f1e9">
+	<meta name="description" content="Meet AimBot JR, a FIRST Tech Challenge team building, learning, and competing together.">
+	<title>AimBot JR — Built to make the shot</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--paper: #f2f1e9;
+			--ink: #171b19;
+			--muted: #656a63;
+			--line: #c9c9bd;
+			--lime: #d7f45b;
+			--orange: #f36b42;
+			--blue: #4774e8;
+			--white: #fbfaf6;
+			--mono: 'IBM Plex Mono', monospace;
+			--sans: 'DM Sans', sans-serif;
+			--display: 'Barlow Condensed', Impact, sans-serif;
+		}
+
+		*, *::before, *::after { box-sizing: border-box; }
+		html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+		body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+		a { color: inherit; }
+		button { font: inherit; }
+		.wrap { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+		.eyebrow { font: 500 11px/1.4 var(--mono); letter-spacing: 0; text-transform: uppercase; }
+		.section { padding: 104px 0; border-top: 1px solid var(--line); }
+		.section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 48px; }
+		.section-head h2 { margin: 8px 0 0; font: 800 clamp(44px, 6vw, 72px)/.88 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.section-head p { max-width: 290px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+		.topbar { position: sticky; z-index: 20; top: 0; background: rgba(242, 241, 233, .94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+		.nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+		.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 15px; letter-spacing: 0; white-space: nowrap; }
+		.brand-mark { width: 28px; height: 28px; display: grid; place-items: center; background: var(--lime); border: 1px solid var(--ink); border-radius: 50%; font: 700 12px var(--mono); }
+		.nav-links { display: flex; align-items: center; gap: 28px; }
+		.nav-links a { color: var(--muted); font: 500 11px var(--mono); text-decoration: none; text-transform: uppercase; transition: color .2s ease; }
+		.nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
+		.nav-cta { padding: 11px 15px; background: var(--ink); color: var(--white) !important; }
+		.menu-toggle { display: none; width: 40px; height: 40px; padding: 10px; border: 1px solid var(--ink); background: transparent; cursor: pointer; }
+		.menu-toggle span { display: block; height: 2px; margin: 4px 0; background: var(--ink); }
+
+		.hero { position: relative; overflow: hidden; min-height: 615px; display: grid; align-items: center; padding: 76px 0 84px; background-color: var(--paper); background-image: radial-gradient(#8b8d7f 0.65px, transparent .65px); background-size: 18px 18px; }
+		.hero::after { position: absolute; inset: 0; content: ''; pointer-events: none; background: linear-gradient(90deg, var(--paper) 0%, rgba(242,241,233,.96) 36%, rgba(242,241,233,.36) 100%); }
+		.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: 24px; }
+		.hero-copy { position: relative; z-index: 2; }
+		.hero-tag { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 18px; padding: 8px 11px; background: var(--lime); border: 1px solid var(--ink); font: 500 10px var(--mono); text-transform: uppercase; }
+		.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+		.hero h1 { max-width: 660px; margin: 0; font: 900 clamp(76px, 12vw, 148px)/.76 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.hero h1 span { display: block; color: var(--orange); }
+		.hero-bottom { display: flex; align-items: center; gap: 28px; margin-top: 30px; }
+		.hero-bottom p { max-width: 310px; margin: 0; color: #464b45; font-size: 14px; line-height: 1.65; }
+		.button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 46px; padding: 0 17px; border: 1px solid var(--ink); background: var(--ink); color: white; font: 500 10px var(--mono); text-decoration: none; text-transform: uppercase; transition: transform .2s ease, background .2s ease; }
+		.button:hover { transform: translateY(-2px); background: var(--blue); }
+		.button .arrow { font-size: 17px; line-height: 0; }
+		.hero-art { position: relative; min-width: 0; margin-left: -55px; }
+		.hero-art svg { display: block; width: min(100%, 550px); height: auto; margin: auto; overflow: visible; }
+		.art-label { position: absolute; padding: 8px 10px; background: var(--white); border: 1px solid var(--ink); font: 10px var(--mono); text-transform: uppercase; }
+		.art-label.top { top: 8%; right: 2%; transform: rotate(3deg); }
+		.art-label.bottom { bottom: 8%; left: 3%; transform: rotate(-3deg); }
+		.hero-index { position: absolute; z-index: 2; right: 0; bottom: 18px; color: var(--muted); font: 10px var(--mono); }
+
+		.intro-grid { display: grid; grid-template-columns: .7fr 1.3fr; gap: 80px; }
+		.intro-stamp { display: grid; place-content: center; width: 156px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; transform: rotate(-12deg); text-align: center; }
+		.intro-stamp strong { font: 800 43px/.8 var(--display); text-transform: uppercase; }
+		.intro-stamp span { margin-top: 10px; font: 10px var(--mono); text-transform: uppercase; }
+		.intro-copy h2 { max-width: 750px; margin: -7px 0 25px; font: 700 clamp(32px, 4.2vw, 53px)/1.07 var(--sans); letter-spacing: 0; }
+		.intro-copy h2 em { color: var(--blue); font-style: normal; }
+		.intro-copy > p { max-width: 640px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+		.principles { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 27px; }
+		.principles span { padding: 8px 11px; border: 1px solid var(--line); font: 10px var(--mono); text-transform: uppercase; }
+
+		.events { background: var(--ink); color: var(--white); }
+		.events .section-head p { color: #b7bab1; }
+		.events .eyebrow { color: var(--lime); }
+		.event-list { border-top: 1px solid #474b45; }
+		.event-row { display: grid; grid-template-columns: 145px 1fr 180px 30px; align-items: center; gap: 22px; min-height: 93px; border-bottom: 1px solid #474b45; }
+		a.event-row { color: inherit; text-decoration: none; }
+		a.event-row:hover h3 { color: var(--lime); }
+		a.event-row:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
+		.event-date { color: var(--lime); font: 11px var(--mono); text-transform: uppercase; }
+		.event-row h3 { margin: 0; font: 700 23px var(--sans); letter-spacing: 0; }
+		.event-row p { margin: 5px 0 0; color: #a5aaa1; font-size: 12px; }
+		.event-type { justify-self: start; padding: 7px 9px; border: 1px solid #656961; color: #d0d2cb; font: 10px var(--mono); text-transform: uppercase; }
+		.event-arrow { color: var(--lime); font-size: 21px; }
+		.contact { background: var(--orange); color: var(--ink); }
+		.contact-layout { display: grid; grid-template-columns: 1fr .82fr; align-items: center; gap: 80px; }
+		.contact-copy .eyebrow { display: inline-block; margin-bottom: 22px; }
+		.contact-copy h2 { margin: 0; font: 900 104px/.78 var(--display); text-transform: uppercase; }
+		.contact-copy h2 span { color: var(--white); }
+		.contact-intro { max-width: 390px; margin: 24px 0; font-size: 15px; line-height: 1.7; }
+		.contact-school { font: 10px var(--mono); text-transform: uppercase; }
+		.contact-links { display: grid; gap: 12px; }
+		.contact-link { display: grid; grid-template-columns: 1fr 38px; align-items: center; gap: 14px; min-height: 116px; padding: 20px 22px; border: 1px solid var(--ink); background: var(--white); color: var(--ink); text-decoration: none; transition: background .2s ease, transform .2s ease; }
+		.contact-link:hover { transform: translateX(5px); background: var(--lime); }
+		.contact-label { display: block; margin-bottom: 12px; color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+		.contact-value { display: block; font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+		.contact-arrow { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; font-size: 18px; }
+
+		.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+		.member { min-height: 210px; display: flex; flex-direction: column; justify-content: space-between; padding: 18px; background: var(--white); border: 1px solid var(--line); transition: transform .2s ease, border-color .2s ease; }
+		.member:hover { transform: translateY(-4px); border-color: var(--ink); }
+		.member-top { display: flex; justify-content: space-between; align-items: start; }
+		.member-number { color: var(--muted); font: 10px var(--mono); }
+		.member-icon { display: grid; place-items: center; width: 37px; height: 37px; background: var(--lime); border: 1px solid var(--ink); border-radius: 50%; font: 600 12px var(--mono); }
+		.member:nth-child(2) .member-icon { background: #f7a58d; }
+		.member:nth-child(3) .member-icon { background: #a9bcff; }
+		.member:nth-child(4) .member-icon { background: #f5d276; }
+		.member h3 { margin: 0 0 5px; font: 700 22px var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.member p { margin: 0; color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+		.team-note { margin: 22px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+		.tasks { background: var(--lime); }
+		.tasks .section-head p { color: #414735; }
+		.task-list { border-top: 1px solid rgba(23,27,25,.35); }
+		.task-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 20px; min-height: 76px; border-bottom: 1px solid rgba(23,27,25,.35); }
+		.task-number { font: 11px var(--mono); }
+		.task-row h3 { margin: 0; font-size: 16px; font-weight: 600; }
+		.task-status { padding: 7px 9px; border: 1px solid var(--ink); font: 9px var(--mono); text-transform: uppercase; }
+		.task-status.now { background: var(--ink); color: var(--lime); }
+
+		.robot-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 60px; align-items: center; }
+		.robot-panel { position: relative; display: grid; place-items: center; min-height: 435px; padding: 25px; overflow: hidden; background: #dfe5dc; border: 1px solid var(--ink); background-image: linear-gradient(rgba(23,27,25,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(23,27,25,.07) 1px, transparent 1px); background-size: 25px 25px; }
+		.robot-panel svg { position: relative; z-index: 1; width: min(100%, 520px); height: auto; }
+		.robot-caption { position: absolute; right: 12px; bottom: 11px; left: 12px; display: flex; justify-content: space-between; gap: 10px; font: 9px var(--mono); text-transform: uppercase; }
+		.robot-copy .eyebrow { color: var(--blue); }
+		.robot-copy h2 { margin: 10px 0 15px; font: 800 54px/.9 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.robot-copy > p { color: var(--muted); font-size: 14px; line-height: 1.75; }
+		.spec-list { margin: 27px 0 20px; border-top: 1px solid var(--line); }
+		.spec { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+		.spec span:first-child { color: var(--muted); }
+		.spec span:last-child { font: 10px var(--mono); text-align: right; text-transform: uppercase; }
+		.placeholder-note { padding-left: 12px; border-left: 3px solid var(--orange); color: var(--muted); font-size: 11px !important; }
+
+		footer { padding: 28px 0; background: var(--ink); color: var(--white); }
+		.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+		.footer-inner p { margin: 0; color: #b7bab1; font: 10px var(--mono); }
+		.back-top { color: var(--lime); font: 10px var(--mono); text-decoration: none; text-transform: uppercase; }
+		.reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+		.reveal.visible { opacity: 1; transform: translateY(0); }
+		@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
+
+		@media (max-width: 800px) {
+			.wrap { width: min(100% - 36px, 600px); }
+			.section { padding: 76px 0; }
+			.menu-toggle { display: block; }
+			.nav-links { position: absolute; top: 68px; right: 0; left: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 18px 16px; background: var(--paper); border-bottom: 1px solid var(--line); }
+			.nav-links.open { display: flex; }
+			.nav-links a { padding: 14px 0; border-bottom: 1px solid var(--line); }
+			.nav-links .nav-cta { margin-top: 10px; padding: 12px; text-align: center; }
+			.hero { min-height: auto; padding: 67px 0 62px; }
+			.hero-inner { grid-template-columns: 1fr; gap: 0; }
+			.hero h1 { font-size: clamp(80px, 18vw, 130px); }
+			.hero-bottom { align-items: flex-start; flex-direction: column; gap: 17px; }
+			.hero-art { width: min(100%, 480px); margin: -5px auto -18px; }
+			.hero-art svg { width: 90%; }
+			.hero-index { right: 0; bottom: 4px; }
+			.intro-grid { grid-template-columns: 1fr; gap: 34px; }
+			.intro-stamp { width: 105px; }
+			.intro-stamp strong { font-size: 32px; }
+			.team-grid { grid-template-columns: repeat(2, 1fr); }
+			.member { min-height: 175px; }
+			.robot-grid { grid-template-columns: 1fr; gap: 38px; }
+			.robot-panel { min-height: 340px; }
+			.section-head { align-items: flex-start; flex-direction: column; margin-bottom: 34px; }
+		}
+		@media (max-width: 520px) {
+			.event-row { grid-template-columns: 75px 1fr 22px; gap: 12px; padding: 15px 0; }
+			.event-date { font-size: 9px; }
+			.event-row h3 { font-size: 18px; }
+			.event-row p { font-size: 11px; }
+			.event-type { display: none; }
+			.contact-layout { grid-template-columns: 1fr; gap: 32px; }
+			.contact-copy h2 { font-size: 72px; }
+			.contact-link { min-height: 96px; padding: 16px; }
+			.task-row { grid-template-columns: 28px 1fr; gap: 12px; padding: 13px 0; }
+			.task-status { grid-column: 2; justify-self: start; }
+			.robot-panel { min-height: 270px; padding: 14px; }
+			.robot-copy h2 { font-size: 47px; }
+			.footer-inner { align-items: flex-start; flex-direction: column; }
+		}
+	</style>
+</head>
+<body>
+	<header class="topbar">
+		<nav class="nav wrap" aria-label="Main navigation">
+			<a class="brand" href="#home" aria-label="AimBot JR home"><span class="brand-mark">AJ</span> AIMBOT JR</a>
+			<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+			<div class="nav-links" id="nav-links">
+				<a href="#about">Our team</a>
+				<a href="#events">Events</a>
+				<a href="#members">Members</a>
+				<a href="#tasks">To-do list</a>
+				<a href="#contact">Contact</a>
+				<a class="nav-cta" href="#robot">The robot <span aria-hidden="true">↗</span></a>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<section class="hero" id="home">
+			<div class="wrap hero-inner">
+				<div class="hero-copy">
+					<div class="hero-tag"><span class="live-dot"></span> FIRST Tech Challenge team</div>
+					<h1>Aim for <span>better.</span></h1>
+					<div class="hero-bottom">
+						<p>We’re AimBot JR. A team of builders, thinkers, and problem-solvers learning by making things that move.</p>
+						<a class="button" href="#about">Get to know us <span class="arrow" aria-hidden="true">↘</span></a>
+					</div>
+				</div>
+				<div class="hero-art" aria-label="Illustration of the AimBot JR robot concept">
+					<span class="art-label top">AimBot / prototype 01</span>
+					<svg viewBox="0 0 560 480" role="img" aria-labelledby="hero-svg-title">
+						<title id="hero-svg-title">AimBot JR's illustrated competition robot concept</title>
+						<ellipse cx="290" cy="418" rx="188" ry="19" fill="#171b19" opacity=".13"/>
+						<path d="M139 326 172 259h227l43 67-22 60H154z" fill="#f36b42" stroke="#171b19" stroke-width="5"/>
+						<path d="M161 328h265l-14 40H152z" fill="#d7f45b" stroke="#171b19" stroke-width="5"/>
+						<path d="M190 257V213h187v44" fill="#fbfaf6" stroke="#171b19" stroke-width="5"/>
+						<path d="M212 213v-42h143v42" fill="#4774e8" stroke="#171b19" stroke-width="5"/>
+						<rect x="232" y="181" width="101" height="18" rx="4" fill="#171b19"/>
+						<circle cx="258" cy="190" r="5" fill="#d7f45b"/><circle cx="307" cy="190" r="5" fill="#d7f45b"/>
+						<path d="m259 171 11-71 17-17 18 17 10 71" fill="none" stroke="#171b19" stroke-width="14" stroke-linejoin="round"/>
+						<path d="m273 101-26-26m58 26 26-26" stroke="#171b19" stroke-width="10" stroke-linecap="square"/>
+						<path d="m245 75-13-15m99 15 13-15" stroke="#f36b42" stroke-width="8" stroke-linecap="square"/>
+						<circle cx="280" cy="100" r="11" fill="#d7f45b" stroke="#171b19" stroke-width="4"/>
+						<path d="M149 327h-36m316 0h35M178 382v19m194-19v19" stroke="#171b19" stroke-width="8" stroke-linecap="round"/>
+						<circle cx="178" cy="402" r="27" fill="#171b19"/><circle cx="178" cy="402" r="12" fill="#fbfaf6"/>
+						<circle cx="374" cy="402" r="27" fill="#171b19"/><circle cx="374" cy="402" r="12" fill="#fbfaf6"/>
+						<path d="M203 282h160" stroke="#171b19" stroke-width="3"/>
+						<text x="282" y="310" text-anchor="middle" fill="#171b19" font-family="IBM Plex Mono,monospace" font-size="17" font-weight="600" letter-spacing="1">AIMBOT JR</text>
+						<path d="M93 187h51m-26-26v52m363 69h28m-14-14v28" stroke="#171b19" stroke-width="2" opacity=".6"/>
+						<circle cx="93" cy="187" r="4" fill="#f36b42"/><circle cx="498" cy="296" r="4" fill="#4774e8"/>
+					</svg>
+					<span class="art-label bottom">Build / test / repeat</span>
+				</div>
+				<span class="hero-index">INDEPENDENT THINKING. TEAM POWER. &nbsp; / &nbsp; 01—05</span>
+			</div>
+		</section>
+
+		<section class="section" id="about">
+			<div class="wrap intro-grid reveal">
+				<div><span class="eyebrow">01 / A little about us</span><div class="intro-stamp" aria-label="AimBot Junior, FTC team"><strong>AJ<br>JR</strong><span>Curious by design</span></div></div>
+				<div class="intro-copy">
+					<h2>Small team. <em>Big ideas.</em> Always building.</h2>
+					<p>AimBot JR is a FIRST Tech Challenge team from St. Paul's College in Hong Kong, bringing ideas off the page and onto the field. We design, build, and program a robot together, learning from every test, every match, and every teammate along the way.</p>
+					<p>Our goal is bigger than a good score: grow our skills, show up for our community, and make something we're proud to put our name on.</p>
+					<div class="principles"><span>Think boldly</span><span>Build together</span><span>Keep iterating</span><span>Have fun doing it</span></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section events" id="events">
+			<div class="wrap">
+				<div class="section-head reveal"><div><span class="eyebrow">02 / Out in the world</span><h2>Our events</h2></div><p>From tech education to hands-on learning, we stay busy sharing STEM and building new skills.</p></div>
+				<div class="event-list reveal">
+					<a class="event-row" href="spcps-tech-workshop.html"><span class="event-date">Outreach</span><div><h3>SPCPS Tech Education workshop</h3><p>Sharing technology and learning through hands-on activities.</p></div><span class="event-type">Workshop</span><span class="event-arrow" aria-hidden="true">↗</span></a>
+					<a class="event-row" href="stem-workshops.html"><span class="event-date">Outreach</span><div><h3>STEM Workshops</h3><p>Helping students explore science, technology, engineering, and math.</p></div><span class="event-type">Education</span><span class="event-arrow" aria-hidden="true">↗</span></a>
+					<a class="event-row" href="secondary-school-cad-course.html"><span class="event-date">Learning</span><div><h3>Free Secondary School CAD Course</h3><p>Introducing secondary school students to computer-aided design.</p></div><span class="event-type">Free course</span><span class="event-arrow" aria-hidden="true">↗</span></a>
+					<article class="event-row"><span class="event-date">And more</span><div><h3>More events on the way</h3><p>Follow us for updates on our workshops and activities.</p></div><span class="event-type">Coming up</span><span class="event-arrow" aria-hidden="true">↗</span></article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="members">
+			<div class="wrap">
+				<div class="section-head reveal"><div><span class="eyebrow">03 / Meet the crew</span><h2>Team members</h2></div><p>Different strengths, one shared goal: make the next version better.</p></div>
+				<div class="team-grid reveal">
+					<article class="member"><div class="member-top"><span class="member-number">01 / LEADERSHIP</span><span class="member-icon">W</span></div><div><h3>Wei Tsz Yam</h3><p>Team Captain</p></div></article>
+					<article class="member"><div class="member-top"><span class="member-number">02 / LEADERSHIP</span><span class="member-icon">H</span></div><div><h3>Hu Hao Xiang</h3><p>Team Advisor</p></div></article>
+					<article class="member"><div class="member-top"><span class="member-number">03 / LEADERSHIP</span><span class="member-icon">L</span></div><div><h3>Law Hong Ting</h3><p>Vice Team Captain</p></div></article>
+					<article class="member"><div class="member-top"><span class="member-number">04 / OUTREACH</span><span class="member-icon">T</span></div><div><h3>Tsui Ting Him</h3><p>Outreach Executive</p></div></article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section tasks" id="tasks">
+			<div class="wrap">
+				<div class="section-head reveal"><div><span class="eyebrow">04 / The workbench</span><h2>What's next</h2></div><p>Good robots come from good habits. Here’s what we’re focused on next.</p></div>
+				<div class="task-list reveal">
+					<article class="task-row"><span class="task-number">01</span><h3>Test drive paths and tune our controls</h3><span class="task-status now">In progress</span></article>
+					<article class="task-row"><span class="task-number">02</span><h3>Run repeatable mechanism reliability tests</h3><span class="task-status">Up next</span></article>
+					<article class="task-row"><span class="task-number">03</span><h3>Document our build and programming decisions</h3><span class="task-status">Season goal</span></article>
+					<article class="task-row"><span class="task-number">04</span><h3>Share the robot and FTC with our community</h3><span class="task-status">Season goal</span></article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="robot">
+			<div class="wrap robot-grid">
+				<div class="robot-panel reveal">
+					<svg viewBox="0 0 560 380" role="img" aria-labelledby="robot-svg-title">
+						<title id="robot-svg-title">Annotated concept drawing of a competition robot chassis, arm, and claw</title>
+						<g fill="none" stroke="#171b19" stroke-width="3">
+							<path d="M108 258h333l-23 51H128z" fill="#f36b42"/>
+							<path d="M128 258h292v-77H155l-27 77z" fill="#fbfaf6"/>
+							<path d="M172 180v-54h209v54" fill="#4774e8"/>
+							<path d="M232 126 254 52h34l27 74" stroke-width="13" stroke-linejoin="round"/>
+							<circle cx="271" cy="59" r="14" fill="#d7f45b"/>
+							<path d="m252 53-32-22m99 21 29-20" stroke-width="8"/>
+							<path d="m216 30-12-11m146 14 12-10" stroke="#f36b42" stroke-width="5"/>
+							<path d="M171 308v17m227-17v17" stroke-width="9"/>
+							<circle cx="171" cy="337" r="24" fill="#171b19"/><circle cx="171" cy="337" r="9" fill="#fbfaf6"/>
+							<circle cx="398" cy="337" r="24" fill="#171b19"/><circle cx="398" cy="337" r="9" fill="#fbfaf6"/>
+							<path d="M154 213h244M197 237h160" stroke="#c9c9bd"/>
+							<path d="M309 56h143v-26m-27 0h54M279 141h-77v-21m-30 0h-39m270 87h64v-26m0-16v-14" stroke="#4774e8" stroke-dasharray="5 5"/>
+							<circle cx="452" cy="30" r="4" fill="#4774e8"/><circle cx="172" cy="120" r="4" fill="#4774e8"/><circle cx="448" cy="186" r="4" fill="#4774e8"/>
+						</g>
+						<g fill="#171b19" font-family="IBM Plex Mono,monospace" font-size="10">
+							<text x="405" y="17">ARM + CLAW / UPDATE</text>
+							<text x="83" y="112">SENSOR / TBD</text>
+							<text x="454" y="175">DRIVE / TBD</text>
+							<text x="254" y="220" font-size="13" font-weight="600">AIMBOT JR</text>
+						</g>
+					</svg>
+					<div class="robot-caption"><span>Design sketch / concept</span><span>Not to scale</span></div>
+				</div>
+				<div class="robot-copy reveal">
+					<span class="eyebrow">05 / On the field</span>
+					<h2>Current robot design</h2>
+					<p>This concept sketch gives our robot a home on the site. Update the drawing, notes, and specs as your real build comes together.</p>
+					<div class="spec-list">
+						<div class="spec"><span>Drive base</span><span>Update with your design</span></div>
+						<div class="spec"><span>Scoring mechanism</span><span>Update with your design</span></div>
+						<div class="spec"><span>Control system</span><span>Update with your hardware</span></div>
+						<div class="spec"><span>Current iteration</span><span>Prototype / add version</span></div>
+					</div>
+					<p class="placeholder-note">Replace this concept with a photo or diagram of your current robot, then add the real mechanism and iteration details.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="section contact" id="contact">
+			<div class="wrap contact-layout">
+				<div class="contact-copy reveal"><span class="eyebrow">06 / Keep in touch</span><h2>Let's<br><span>connect.</span></h2><p class="contact-intro">Curious about FTC, our workshops, or what we’re building? We’d love to hear from you.</p><span class="contact-school">AimBot JR &nbsp; / &nbsp; St. Paul's College, Hong Kong</span></div>
+				<div class="contact-links reveal">
+					<a class="contact-link" href="mailto:spcaimbotjr@gmail.com"><span><span class="contact-label">Send us an email</span><span class="contact-value">spcaimbotjr@gmail.com</span></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+					<a class="contact-link" href="https://www.instagram.com/ftcaimbotjr?cplk=emVzN3o5eDU5bTFq" target="_blank" rel="noopener noreferrer"><span><span class="contact-label">Follow our team</span><span class="contact-value">Instagram / @ftcaimbotjr</span></span><span class="contact-arrow" aria-hidden="true">↗</span></a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer><div class="wrap footer-inner"><a class="brand" href="#home"><span class="brand-mark">AJ</span> AIMBOT JR</a><p>FIRST Tech Challenge &nbsp; / &nbsp; Built together, one iteration at a time.</p><a class="back-top" href="#home">Back to top ↑</a></div></footer>
+
+	<script>
+		const menuButton = document.querySelector('.menu-toggle');
+		const navLinks = document.querySelector('.nav-links');
+
+		menuButton.addEventListener('click', () => {
+			const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+			menuButton.setAttribute('aria-expanded', String(!isOpen));
+			menuButton.setAttribute('aria-label', isOpen ? 'Open navigation' : 'Close navigation');
+			navLinks.classList.toggle('open', !isOpen);
+		});
+
+		navLinks.addEventListener('click', (event) => {
+			if (event.target.closest('a')) {
+				menuButton.setAttribute('aria-expanded', 'false');
+				menuButton.setAttribute('aria-label', 'Open navigation');
+				navLinks.classList.remove('open');
+			}
+		});
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.12 });
+
+		document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
+	</script>
+</body>
+</html>
